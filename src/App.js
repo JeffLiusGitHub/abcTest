@@ -1,19 +1,27 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { ResultsList } from './components/ResultsList/ResultsList';
-import { Input } from './components/Input/Input';
+// import { Input } from './components/Input/Input';
+import '../src/components/Input/Input.css';
 import { Button } from './components/Button/Button';
 import './App.css';
 import { SearchContainer } from './SearchContainer';
 import axios from 'axios';
+import { Combobox, useComboboxState } from 'ariakit/combobox';
 
 const API_URL = 'http://localhost:8010/proxy/suburbs.json?q=';
 
 export default function App() {
-	const [value, setValue] = useState('');
 	const [data, setData] = useState([]);
 	const [suburb, setSuburb] = useState('');
+	const combobox = useComboboxState({
+		gutter: 12,
+		sameWidth: true,
+	});
+
+	let { value } = combobox;
+
 	const inputChangeHandler = (value) => {
-		setValue(value);
+		combobox.setValue(value);
 	};
 
 	const fetchData = useCallback(async (value) => {
@@ -29,6 +37,7 @@ export default function App() {
 						return { name, postcode, state };
 					})
 			);
+			// user can type both uppercase and lowercase to search the result
 		} catch (err) {
 			alert(err);
 		}
@@ -41,9 +50,9 @@ export default function App() {
 	}, [value, fetchData]);
 
 	const onSelectHandler = (item) => {
-		setValue(item.name);
 		setSuburb(item.name);
 	};
+
 	const buttonClickHandler = () => {
 		if (suburb) {
 			alert(`Your most recent suburb selection is ${suburb}.`);
@@ -51,20 +60,24 @@ export default function App() {
 			alert('Please select the suburb first.');
 		}
 	};
+
 	return (
 		<section>
 			<SearchContainer>
 				<label aria-label="Suburb">Suburb</label>
-				<Input
+				<Combobox
+					state={combobox}
 					type="text"
+					className="Input"
 					value={value}
 					onChange={(e) => inputChangeHandler(e)}
-					placeholder="Type to search suburb"
+					placeholder="Type to search"
 				/>
 				<Button onClick={buttonClickHandler} />
 			</SearchContainer>
 			{data?.length > 0 && (
 				<ResultsList
+					combobox={combobox}
 					items={data}
 					onSelect={(item) => {
 						onSelectHandler(item);

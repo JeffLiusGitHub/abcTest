@@ -6,8 +6,12 @@
     "ariakit": "^2.0.0-next.41",
     "axios": "^1.1.2",
     "react": "^17.0.2",
+    "react-aria": "^3.20.0",
     "react-dom": "^17.0.2",
     "react-scripts": "4.0.3",
+    "react-select": "^5.5.0",
+    "react-stately": "^3.18.0",
+    "reakit": "^1.3.11",
     "styled-components": "^5.3.6"
   },
   "scripts": {

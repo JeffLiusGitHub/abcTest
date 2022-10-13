@@ -1,6 +1,6 @@
 import React from 'react';
 import './ResultsList.css';
-
+import { ComboboxItem, ComboboxPopover } from 'ariakit/combobox';
 /**
  * <ResultsList
  *   items={[...]}
@@ -13,23 +13,29 @@ import './ResultsList.css';
  * @prop {mixed} ... All other props will be forwarded to the container DOM node.
  */
 export function ResultsList(props) {
-	const { className, onSelect, items, ...otherProps } = props;
+	const { className, onSelect, items, combobox, ...otherProps } = props;
 
 	return (
-		<ul className={'ResultsList ' + (className || '')} {...otherProps}>
+		<ComboboxPopover
+			state={combobox}
+			className={'ResultsList ' + (className || '')}
+			{...otherProps}
+		>
 			{items.map(function (item, index) {
 				return (
-					<li
+					<ComboboxItem
 						key={'item' + index}
 						className="ResultsList-item"
+						value={`${item.name}, ${item.state.abbreviation} ${item.postcode}`}
 						onClick={() => onSelect && onSelect(item)}
 					>
 						<button className="ResultsList-button">
 							{item.name}, {item.state.abbreviation} {item.postcode}
+							{/* add postcode, let user search the exact suburb they want */}
 						</button>
-					</li>
+					</ComboboxItem>
 				);
 			})}
-		</ul>
+		</ComboboxPopover>
 	);
 }
