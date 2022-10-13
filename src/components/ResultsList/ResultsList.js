@@ -1,11 +1,6 @@
 import React from 'react';
 import './ResultsList.css';
-import {
-	Combobox,
-	ComboboxItem,
-	ComboboxPopover,
-	useComboboxState,
-} from 'ariakit/combobox';
+
 /**
  * <ResultsList
  *   items={[...]}
@@ -24,17 +19,15 @@ export function ResultsList(props) {
 		<ul className={'ResultsList ' + (className || '')} {...otherProps}>
 			{items.map(function (item, index) {
 				return (
-					// <ComboboxItem key={item} value={`${item.name}${item.state.abbreviation}`}>
-						<li
-							key={'item' + index}
-							className="ResultsList-item"
-							onClick={() => onSelect && onSelect(item)}
-						>
-							<button className="ResultsList-button">
-								{item.name}, {item.state.abbreviation}
-							</button>
-						</li>
-					// </ComboboxItem>
+					<li
+						key={'item' + index}
+						className="ResultsList-item"
+						onClick={() => onSelect && onSelect(item)}
+					>
+						<button className="ResultsList-button">
+							{item.name}, {item.state.abbreviation} {item.postcode}
+						</button>
+					</li>
 				);
 			})}
 		</ul>
