@@ -64,9 +64,12 @@ export default function App() {
 	return (
 		<section>
 			<SearchContainer>
-				<label aria-label="Suburb">Suburb</label>
+				<label aria-label="Suburb" htmlFor="Suburb">
+					Suburb
+				</label>
 				<Combobox
 					state={combobox}
+					id="Suburb"
 					type="text"
 					className="Input"
 					value={value}
