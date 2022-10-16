@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { ResultsList } from './components/ResultsList/ResultsList';
 // import { Input } from './components/Input/Input';
 import '../src/components/Input/Input.css';
@@ -18,7 +18,9 @@ export default function App() {
 		sameWidth: true,
 	});
 
-	let { value } = combobox;
+	let value = useMemo(() => {
+		return combobox.value;
+	}, [combobox]);
 
 	const inputChangeHandler = (value) => {
 		combobox.setValue(value);

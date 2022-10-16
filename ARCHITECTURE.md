@@ -20,7 +20,7 @@ Accepted
 
 ## Context
 
-It is important to make the website accessible to people whit motor disabilities who may only be able to use keyboards. According to [ARIA combobox guide](https://www.w3.org/WAI/ARIA/apg/patterns/combobox/)
+It is important to make the website accessible to people have motor disabilities who may only be able to use keyboards. According to [ARIA combobox guide](https://www.w3.org/WAI/ARIA/apg/patterns/combobox/)
  The keyboard interaction section show the guides that
 1. User may use down and up arrow to select suggestion. 
 2. User can use Enter key to select the suggestion.

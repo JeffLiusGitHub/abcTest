@@ -14,7 +14,6 @@ import { ComboboxItem, ComboboxPopover } from 'ariakit/combobox';
  */
 export function ResultsList(props) {
 	const { className, onSelect, items, combobox, ...otherProps } = props;
-
 	return (
 		<ComboboxPopover
 			state={combobox}
