@@ -7,12 +7,14 @@ import './App.css';
 import { SearchContainer } from './SearchContainer';
 import axios from 'axios';
 import { Combobox, useComboboxState } from 'ariakit/combobox';
+import useDebounce from './components/hooks/useDebounce';
 
 const API_URL = 'http://localhost:8010/proxy/suburbs.json?q=';
 
 export default function App() {
 	const [data, setData] = useState([]);
 	const [suburb, setSuburb] = useState('');
+
 	const combobox = useComboboxState({
 		gutter: 12,
 		sameWidth: true,
@@ -21,9 +23,9 @@ export default function App() {
 	let value = useMemo(() => {
 		return combobox.value;
 	}, [combobox]);
-
+	const debouncedSearchValue = useDebounce(value, 600);
 	const inputChangeHandler = (value) => {
-		combobox.setValue(value);
+		combobox.setValue(debouncedSearchValue);
 	};
 
 	const fetchData = useCallback(async (value) => {
@@ -46,10 +48,10 @@ export default function App() {
 	}, []);
 
 	useEffect(() => {
-		if (value) {
-			fetchData(value);
+		if (debouncedSearchValue) {
+			fetchData(debouncedSearchValue);
 		}
-	}, [value, fetchData]);
+	}, [debouncedSearchValue, fetchData]);
 
 	const onSelectHandler = (item) => {
 		setSuburb(item.name);
