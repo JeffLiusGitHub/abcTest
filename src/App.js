@@ -14,7 +14,7 @@ const API_URL = 'http://localhost:8010/proxy/suburbs.json?q=';
 export default function App() {
 	const [data, setData] = useState([]);
 	const [suburb, setSuburb] = useState('');
-
+	const [isLoading, setIsLoading] = useState(false);
 	const combobox = useComboboxState({
 		gutter: 12,
 		sameWidth: true,
@@ -30,6 +30,7 @@ export default function App() {
 
 	const fetchData = useCallback(async (value) => {
 		try {
+			setIsLoading(true);
 			const res = await axios.get(`${API_URL}${value}`);
 			setData(
 				res?.data
@@ -41,6 +42,7 @@ export default function App() {
 						return { name, postcode, state };
 					})
 			);
+			setIsLoading(false);
 			// user can type both uppercase and lowercase to search the result
 		} catch (err) {
 			alert(err);
@@ -82,6 +84,7 @@ export default function App() {
 				/>
 				<Button onClick={buttonClickHandler} />
 			</SearchContainer>
+			{isLoading ? <p>Loading...</p> : null}
 			{data?.length > 0 && (
 				<ResultsList
 					combobox={combobox}

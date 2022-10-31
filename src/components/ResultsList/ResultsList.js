@@ -29,7 +29,7 @@ export function ResultsList(props) {
 						onClick={() => onSelect && onSelect(item)}
 					>
 						<button className="ResultsList-button">
-							{item.name}, {item.state.abbreviation} {item.postcode}
+							{item?.name}, {item?.state?.abbreviation} {item?.postcode}
 							{/* add postcode, let user search the exact suburb they want */}
 						</button>
 					</ComboboxItem>
