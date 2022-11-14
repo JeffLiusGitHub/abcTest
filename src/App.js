@@ -28,10 +28,12 @@ export default function App() {
 		combobox.setValue(debouncedSearchValue);
 	};
 
-	const fetchData = useCallback(async (value) => {
+	const fetchData = useCallback(async (value, controller) => {
 		try {
 			setIsLoading(true);
-			const res = await axios.get(`${API_URL}${value}`);
+			const res = await axios.get(`${API_URL}${value}`, {
+				signal: controller.signal,
+			});
 			setData(
 				res?.data
 					?.filter((item) =>
@@ -50,9 +52,13 @@ export default function App() {
 	}, []);
 
 	useEffect(() => {
+		const controller = new AbortController();
 		if (debouncedSearchValue) {
-			fetchData(debouncedSearchValue);
+			fetchData(debouncedSearchValue, controller);
 		}
+		return () => {
+			controller.abort();
+		};
 	}, [debouncedSearchValue, fetchData]);
 
 	const onSelectHandler = (item) => {
